@@ -1,0 +1,25 @@
+.form__toggle {
+	background-image: url(../../../images/Close\ Icon.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: -40px;
+	right: -40px;
+}
+
+.form__toggle:hover {
+	opacity: .6;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    .form__toggle {
+        width: 20px;
+		height: 20px;
+		top: -36px;
+		right: 0;
+    }
+}

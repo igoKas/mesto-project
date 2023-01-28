@@ -19,7 +19,7 @@
 					Жак-Ив Кусто
 					<img src="./images/Edit Button.svg" alt="Редактировать" class="profile__edit-btn">
 				</h1>
-				<p class="profile__calling">Исследователь океана</p>
+				<p class="profile__about">Исследователь океана</p>
 			</div>
 			<div class="profile__add-btn"></div>
 		</section>
@@ -71,5 +71,17 @@
 	<footer class="footer container">
 		<p class="footer__copyright">© 2020 Mesto Russia</p>
 	</footer>
+	<section class="popup">
+		<form action="post" class="form popup__container">
+			<div class="form__toggle"></div>
+			<h2 class="form__heading">Редактировать профиль</h2>
+			<fieldset class="form__input-container">
+				<input class="form__item" id="name" name="name" type="text" placeholder="Имя" required>
+				<input class="form__item" id="about" name="about" type="text" placeholder="О себе" required>
+			</fieldset>
+			<button class="form__submit-btn" type="submit">Сохранить</button>
+		</form>
+	</section>
+	<script src="./scripts/script.js"></script>
 </body>
 </html>
