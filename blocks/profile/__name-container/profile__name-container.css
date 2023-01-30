@@ -1,0 +1,12 @@
+.profile__name-container {
+	box-sizing: border-box;
+	display: flex;
+	gap: 19px;
+	align-items: baseline;
+}
+
+@media screen and (max-width: 767px) {
+    .profile__name-container {
+		position: relative;
+    }
+}

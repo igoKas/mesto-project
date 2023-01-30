@@ -1,4 +1,5 @@
 .form {
+	position: relative;
 	padding: 34px 36px 37px;
 	background-color: #fff;
 	border-radius: 10px;

@@ -1,4 +1,5 @@
 .form__toggle {
+	background: none;
 	background-image: url(../../../images/Close\ Icon.svg);
 	background-repeat: no-repeat;
 	background-position: center;
