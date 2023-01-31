@@ -1,8 +1,4 @@
 .form {
-	position: relative;
-	padding: 34px 36px 37px;
-	background-color: #fff;
-	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	gap: 48px;
@@ -10,7 +6,6 @@
 
 @media screen and (max-width: 767px) {
     .form {
-        padding: 25px 22px;
 		gap: 45px;
     }
 }
