@@ -1,4 +1,4 @@
-.form__toggle {
+.popup__close-btn {
 	background: none;
 	background-image: url(../../../images/Close\ Icon.svg);
 	background-repeat: no-repeat;
@@ -12,13 +12,13 @@
 	right: -40px;
 }
 
-.form__toggle:hover {
+.popup__close-btn:hover {
 	opacity: .6;
 	cursor: pointer;
 }
 
 @media screen and (max-width: 767px) {
-    .form__toggle {
+    .popup__close-btn {
         width: 20px;
 		height: 20px;
 		top: -36px;
