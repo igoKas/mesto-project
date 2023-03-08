@@ -34,20 +34,18 @@ function setLikeListener(card) {
 	});
 }
 
-function SetDeleteListener(card) {
+function setDeleteListener(card) {
 	const deleteCard = card.querySelector('.card__delete-btn');
 	deleteCard.addEventListener('click', function() {
 		deleteCard.closest('.card').remove();
 	});
 }
 
-function setImageClickListener(card) {
-	const openImage = card.querySelector('.card__image');
-	openImage.addEventListener('click', function (evt) {
-		openPopup(imagePopup);
-		cardImage.setAttribute('src', evt.target.getAttribute('src'));
-		cardCaption.textContent = evt.target.parentElement.querySelector('.card__name').textContent;
-	});
+function handleCardClick(item) {
+	openPopup(imagePopup);
+	cardImage.src = item.link;
+	cardImage.alt = item.name;
+	cardCaption.textContent = item.name;
 }
 
 closeBtns.forEach(function (btn) {
@@ -57,12 +55,14 @@ closeBtns.forEach(function (btn) {
 
 function createCard (item) {
 	const card = cardTemplate.querySelector('.card').cloneNode(true);
-	card.querySelector('.card__image').src = item.link;
-	card.querySelector('.card__image').alt = item.name;
-	card.querySelector('.card__name').textContent = item.name;
+	const cardImage = card.querySelector('.card__image');
+	const cardName = card.querySelector('.card__name');
+	cardImage.src = item.link;
+	cardImage.alt = item.name;
+	cardName.textContent = item.name;
 	setLikeListener(card);
-	SetDeleteListener(card);
-	setImageClickListener(card);
+	setDeleteListener(card);
+	cardImage.addEventListener('click', () => handleCardClick(item)) ;
 	return card;
 }
 
