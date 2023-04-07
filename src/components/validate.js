@@ -1,5 +1,3 @@
-import { handleProfileFormSubmit, handleAddFormSubmit } from "./modal.js";
-
 const showInputError = (formElement, inputElement, errorMessage, settings) => {
 	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 	inputElement.classList.add(settings.inputErrorClass);
@@ -43,13 +41,6 @@ const setEventListeners = (formElement, settings) => {
 const enableValidation = (settings) => {
 	const formList = Array.from(document.querySelectorAll(settings.formSelector));
 	formList.forEach((formElement) => {
-		formElement.addEventListener('submit', function (evt) {
-			if (evt.target.name === 'edit-profile-form') {
-				handleProfileFormSubmit(evt);
-			} else if (evt.target.name === 'add-card-form')
-				handleAddFormSubmit(evt);
-		});
-
 		const fieldsetList = Array.from(formElement.querySelectorAll(settings.fieldsetSelector));
 		fieldsetList.forEach((fieldset) => {
 			setEventListeners(fieldset, settings);
@@ -73,4 +64,4 @@ const toggleButtonState = (inputList, buttonElement, settings) => {
 	};
 };
 
-export { enableValidation };
+export { enableValidation, toggleButtonState, hasInvalidInput };

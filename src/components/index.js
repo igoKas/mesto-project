@@ -4,11 +4,13 @@ import { enableValidation } from './validate.js';
 
 import { renderInitalCards } from './card.js';
 
-import { setOpenPopupListeners, initialFillEditForm, setClosePopupListeners } from './modal.js';
+import { setOpenPopupListeners, fillProfileForm, setClosePopupListeners, enableFormSubmition } from './modal.js';
 
 renderInitalCards();
 
-initialFillEditForm();
+fillProfileForm();
+
+enableFormSubmition();
 
 setClosePopupListeners();
 

@@ -1,5 +1,8 @@
 import {openPopup} from './modal.js';
 
+const imagePopup = document.querySelector('.image-popup');
+const cardsList = document.querySelector('.cards__list');
+
 const initialCards = [
 	{
 		name: 'Архыз',
@@ -42,7 +45,6 @@ const setDeleteListener = (card) => {
 }
 
 const handleCardClick = (item) => {
-	const imagePopup = document.querySelector('.image-popup');
 	const cardImage = imagePopup.querySelector('.card-zoom__image');
 	const cardCaption = imagePopup.querySelector('.card-zoom__caption');
 	cardImage.src = item.link;
@@ -66,7 +68,6 @@ const createCard = (item) => {
 }
 
 const renderInitalCards = () => {
-	const cardsList = document.querySelector('.cards__list');
 	initialCards.forEach(function (item) {
 		const card = createCard(item);
 		cardsList.append(card);
