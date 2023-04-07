@@ -1,7 +1,9 @@
 .form__submit-btn {
-	padding: 14px 0;
-	border: 0;
+	box-sizing: border-box;
+	padding: 13px 0;
+	border: 1px solid #000;
 	border-radius: 2px;
+	width: 100%;
 	color: #fff;
 	background-color: #000;
 	font-weight: 400;

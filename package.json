@@ -1,0 +1,38 @@
+{
+  "name": "mesto-project",
+  "version": "1.0.0",
+  "description": "На данный момент подготовлена адаптивная верстка страницы и формы редактирования профиля. А именно подговлен блок с информацией о профиле, а также сетка из фотокарточек. Реализовано открытие и закрытие формы. В дальнейшем будет реализована возможность редактирования профиля и добавление/удаление фотокарточек.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igoKas/mesto-project.git"
+  },
+  "author": "Igor Kashapov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igoKas/mesto-project/issues"
+  },
+  "homepage": "https://github.com/igoKas/mesto-project#readme",
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "cssnano": "^6.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.5",
+    "postcss-loader": "^7.2.4",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.2"
+  },
+  "dependencies": {
+    "core-js": "^3.30.0"
+  }
+}
