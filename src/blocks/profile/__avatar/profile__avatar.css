@@ -1,9 +1,27 @@
 .profile__avatar {
-	max-width: 120px;
-	max-height: 120px;
-	object-fit: cover;
-	object-position: center;
+	position: relative;
+	cursor: pointer;
+	background-position: center;
+	background-size: cover;
+	width: 120px;
+	height: 120px;
 	border-radius: 100%;
+}
+
+.profile__avatar::before {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	background-image: url(../../../images/editAvatar.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: rgba(0, 0, 0, 0.8);
+	height: 100%;
+	width: 100%;
+}
+
+.profile__avatar:hover::before {
+	z-index: 1;
 }
 
 @media screen and (max-width: 767px) {

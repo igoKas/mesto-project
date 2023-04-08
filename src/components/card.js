@@ -1,46 +1,33 @@
-import {openPopup} from './modal.js';
+import { openPopup, profileId } from './modal.js';
+import { getCards, deleteCard, likeCard, unlikeCard } from './api.js';
 
 const imagePopup = document.querySelector('.image-popup');
 const cardsList = document.querySelector('.cards__list');
 
-const initialCards = [
-	{
-		name: 'Архыз',
-		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-	},
-	{
-		name: 'Челябинская область',
-		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-	},
-	{
-		name: 'Иваново',
-		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-	},
-	{
-		name: 'Камчатка',
-		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-	},
-	{
-		name: 'Холмогорский район',
-		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-	},
-	{
-		name: 'Байкал',
-		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-	}
-];
-
-const setLikeListener = (card) => {
+const setLikeListener = (card, cardId) => {
 	const cardLike = card.querySelector('.card__like-btn');
-	cardLike.addEventListener('click', function () {
-		cardLike.classList.toggle('card__like-btn_liked');
+	const likeCounter = card.querySelector('.card__like-counter');
+	cardLike.addEventListener('click', () => {
+		if (cardLike.classList.contains('card__like-btn_liked')) {
+			unlikeCard(cardId).then(res => {
+				likeCounter.textContent = res.likes.length;
+				cardLike.classList.toggle('card__like-btn_liked');
+			})
+		} else {
+			likeCard(cardId).then(res => {
+				likeCounter.textContent = res.likes.length;
+				cardLike.classList.toggle('card__like-btn_liked');
+			})
+		}
 	});
 }
 
-const setDeleteListener = (card) => {
-	const deleteCard = card.querySelector('.card__delete-btn');
-	deleteCard.addEventListener('click', function () {
-		deleteCard.closest('.card').remove();
+const setDeleteListener = (card, cardId) => {
+	const cardDelete = card.querySelector('.card__delete-btn');
+	cardDelete.addEventListener('click', () => {
+		deleteCard(cardId).then(res => {
+			cardDelete.closest('.card').remove();
+		})
 	});
 }
 
@@ -58,19 +45,36 @@ const createCard = (item) => {
 	const card = cardTemplate.querySelector('.card').cloneNode(true);
 	const cardImage = card.querySelector('.card__image');
 	const cardName = card.querySelector('.card__name');
+	const cardLikeCounter = card.querySelector('.card__like-counter');
+	const cardLikeBtn = card.querySelector('.card__like-btn')
+	const cardDelete = card.querySelector('.card__delete-btn');
 	cardImage.src = item.link;
 	cardImage.alt = item.name;
 	cardName.textContent = item.name;
-	setLikeListener(card);
-	setDeleteListener(card);
+	cardLikeCounter.textContent = item.likes.length;
+	if (item.owner._id !== profileId) {
+
+		cardDelete.style.display = 'none';
+	} else {
+		setDeleteListener(card, item._id);
+	}
+	item.likes.forEach((user) => {
+		if (user._id === profileId) {
+			cardLikeBtn.classList.toggle('card__like-btn_liked');
+			return
+		}
+	})
+	setLikeListener(card, item._id);
 	cardImage.addEventListener('click', () => handleCardClick(item));
 	return card;
 }
 
 const renderInitalCards = () => {
-	initialCards.forEach(function (item) {
-		const card = createCard(item);
-		cardsList.append(card);
+	getCards().then(initialCards => {
+		initialCards.forEach(function (item) {
+			const card = createCard(item);
+			cardsList.append(card);
+		})
 	})
 }
 

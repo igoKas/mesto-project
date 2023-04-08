@@ -64,4 +64,4 @@ const toggleButtonState = (inputList, buttonElement, settings) => {
 	};
 };
 
-export { enableValidation, toggleButtonState, hasInvalidInput };
+export { enableValidation, toggleButtonState, checkInputValidity };
