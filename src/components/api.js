@@ -17,12 +17,6 @@ async function api(uri, data, method) {
 			body: JSON.stringify(data)
 		};
 	}
-
-	// return fetch(server + uri, options)
-	// 	.then(res => {
-	// 		if (res.ok) return res.json();
-	// 		return Promise.reject(`Ошибка: ${res.status}`);
-	// 	})
 	try {
 		const response = await fetch(server + uri, options);
 		if (!response.ok) {

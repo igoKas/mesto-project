@@ -1,81 +1,51 @@
-import { openPopup, profileId } from './modal.js';
-import { getCards, deleteCard, likeCard, unlikeCard } from './api.js';
-
-const imagePopup = document.querySelector('.image-popup');
 const cardsList = document.querySelector('.cards__list');
 
-const setLikeListener = (card, cardId) => {
-	const cardLike = card.querySelector('.card__like-btn');
-	const likeCounter = card.querySelector('.card__like-counter');
-	cardLike.addEventListener('click', () => {
-		if (cardLike.classList.contains('card__like-btn_liked')) {
-			unlikeCard(cardId).then(res => {
-				likeCounter.textContent = res.likes.length;
-				cardLike.classList.toggle('card__like-btn_liked');
-			})
-		} else {
-			likeCard(cardId).then(res => {
-				likeCounter.textContent = res.likes.length;
-				cardLike.classList.toggle('card__like-btn_liked');
-			})
-		}
-	});
+const renderInitalCards = (cards) => {
+	cards.forEach(card => {
+		cardsList.append(card);
+	})
 }
 
-const setDeleteListener = (card, cardId) => {
-	const cardDelete = card.querySelector('.card__delete-btn');
-	cardDelete.addEventListener('click', () => {
-		deleteCard(cardId).then(res => {
-			cardDelete.closest('.card').remove();
-		})
-	});
-}
-
-const handleCardClick = (item) => {
-	const cardImage = imagePopup.querySelector('.card-zoom__image');
-	const cardCaption = imagePopup.querySelector('.card-zoom__caption');
-	cardImage.src = item.link;
-	cardImage.alt = item.name;
-	cardCaption.textContent = item.name;
-	openPopup(imagePopup);
-}
-
-const createCard = (item) => {
+const createCard = (cardData, profileId, handleLikeCard, handleDeleteCard, handleCardClick) => {
 	const cardTemplate = document.querySelector('#card-template').content;
 	const card = cardTemplate.querySelector('.card').cloneNode(true);
 	const cardImage = card.querySelector('.card__image');
 	const cardName = card.querySelector('.card__name');
 	const cardLikeCounter = card.querySelector('.card__like-counter');
-	const cardLikeBtn = card.querySelector('.card__like-btn')
+	const cardLikeBtn = card.querySelector('.card__like-btn');
 	const cardDelete = card.querySelector('.card__delete-btn');
-	cardImage.src = item.link;
-	cardImage.alt = item.name;
-	cardName.textContent = item.name;
-	cardLikeCounter.textContent = item.likes.length;
-	if (item.owner._id !== profileId) {
+	const cardLikes = cardData.likes;
+	const cardOwnerId = cardData.owner._id;
+	card.id = cardData._id;
+	cardImage.src = cardData.link;
+	cardImage.alt = cardData.name;
+	cardName.textContent = cardData.name;
+	cardLikeCounter.textContent = cardData.likes.length;
+	if (cardLikes.some(user => user._id === profileId)) cardLikeBtn.classList.add('card__like-btn_liked');
+	cardLikeBtn.addEventListener('click', () => {
+		handleLikeCard(checkStatusLike(cardLikeBtn), card.id, card)
+	});
 
+	if (cardOwnerId !== profileId) {
 		cardDelete.style.display = 'none';
 	} else {
-		setDeleteListener(card, item._id);
+		cardDelete.addEventListener('click', () => handleDeleteCard(card.id, card));
 	}
-	item.likes.forEach((user) => {
-		if (user._id === profileId) {
-			cardLikeBtn.classList.toggle('card__like-btn_liked');
-			return
-		}
-	})
-	setLikeListener(card, item._id);
-	cardImage.addEventListener('click', () => handleCardClick(item));
+	cardImage.addEventListener('click', () => handleCardClick(cardData));
+
 	return card;
 }
 
-const renderInitalCards = () => {
-	getCards().then(initialCards => {
-		initialCards.forEach(function (item) {
-			const card = createCard(item);
-			cardsList.append(card);
-		})
-	})
+function checkStatusLike(cardLikeBtn) {
+	return cardLikeBtn.classList.contains('card__like-btn_liked')
 }
 
-export { renderInitalCards, createCard };
+function changeLike(res, card) {
+	const likeCounter = card.querySelector('.card__like-counter');
+	const cardLike = card.querySelector('.card__like-btn')
+	likeCounter.textContent = res.likes.length;
+	cardLike.classList.toggle('card__like-btn_liked');
+}
+
+
+export { renderInitalCards, createCard, changeLike };
