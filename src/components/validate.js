@@ -64,4 +64,10 @@ const toggleButtonState = (inputList, buttonElement, settings) => {
 	};
 };
 
-export { enableValidation, toggleButtonState, checkInputValidity };
+const checkOpenPopupInputsValidity = popup => {
+	Array.from(popup.querySelectorAll('.form__input')).forEach(inputElement => {
+		checkInputValidity(popup, inputElement, {inputErrorClass: 'form__input_type_error', errorClass: 'form__input-error_active'})
+	})
+}
+
+export { enableValidation, toggleButtonState, checkOpenPopupInputsValidity };

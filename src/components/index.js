@@ -4,13 +4,15 @@ import { renderInitalCards, createCard, changeLike } from './card.js';
 
 import { openPopup, closePopup, setClosePopupListeners } from './modal.js';
 
-import { enableValidation, checkInputValidity, toggleButtonState } from './validate';
+import { enableValidation, checkOpenPopupInputsValidity, toggleButtonState } from './validate';
 
 import { getUserInfo, getCards, likeCard, unlikeCard, deleteCard, patchUserInfo, postCard, changeAvatar } from './api';
 
 import { renderUser } from './user';
 
-const formList = Array.from(document.querySelectorAll('.form'));
+const avatarForm = document.forms['change-avatar-form'];
+const profileForm = document.forms['edit-profile-form'];
+const cardForm = document.forms['add-card-form'];
 const cardsList = document.querySelector('.cards__list')
 const imagePopup = document.querySelector('.image-popup');
 const cardImage = imagePopup.querySelector('.card-zoom__image');
@@ -107,7 +109,7 @@ const handleProfileFormSubmit = evt => {
 	.finally(() => profileButtonElement.textContent = 'Сохранить')
 }
 
-const handleAddFormSubmit = evt => {
+const handleCardFormSubmit = evt => {
 	evt.preventDefault();
 	cardButtonElement.textContent = 'Сохранение...';
 	postCard({
@@ -124,7 +126,7 @@ const handleAddFormSubmit = evt => {
 	.finally(() => cardButtonElement.textContent = 'Сохранить')
 }
 
-const handleChangeAvatarFormSubmit = evt => {
+const handleAvatarFormSubmit = evt => {
 	evt.preventDefault();
 	avatarButtonElement.textContent = 'Сохранение...';
 	changeAvatar({ avatar: avatarLink.value })
@@ -139,26 +141,15 @@ const handleChangeAvatarFormSubmit = evt => {
 }
 
 const enableFormSubmition = () => {
-	formList.forEach((formElement) => {
-		formElement.addEventListener('submit', function (evt) {
-			if (evt.target.name === 'edit-profile-form') {
-				handleProfileFormSubmit(evt);
-			} else if (evt.target.name === 'add-card-form') {
-				handleAddFormSubmit(evt);
-			} else if (evt.target.name === 'change-avatar-form') {
-				handleChangeAvatarFormSubmit(evt);
-			}
-
-		});
-	})
+	profileForm.addEventListener('submit', (evt) => handleProfileFormSubmit(evt));
+	cardForm.addEventListener('submit', (evt) => handleCardFormSubmit(evt));
+	avatarForm.addEventListener('submit', (evt) => handleAvatarFormSubmit(evt));
 }
 
 const setOpenPopupListeners = () => {
 	editBtn.addEventListener('click', () => {
 		openPopup(profilePopup);
-		Array.from(profilePopup.querySelectorAll('.form__input')).forEach(inputElement => {
-			checkInputValidity(profilePopup, inputElement, {inputErrorClass: 'form__input_type_error', errorClass: 'form__input-error_active'})
-		})
+		checkOpenPopupInputsValidity(profilePopup);
 	});
 	addBtn.addEventListener('click', () => openPopup(cardPopup));
 	profileAvatar.addEventListener('click', () => openPopup(avatarPopup));
